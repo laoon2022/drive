@@ -1,0 +1,171 @@
+name: Sync Gdrive
+on:
+  schedule:
+    - cron: "0 0 * * *"
+  workflow_dispatch:
+  
+env:
+  ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+  REFRESH_TOKEN: ${{ secrets.REFRESH_TOKEN }}
+  SHARE_FIELD_ID: ${{ secrets.SHARE_FIELD_ID }}
+  SAVE_FIELD_ID: ${{ secrets.SAVE_FIELD_ID }}
+
+jobs:
+  delete-old-workflow-runs:
+    name: delete-old-workflow-runs
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+      id-token: write
+      contents: read
+      issues: write
+      pull-requests: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        
+      - name: Delete workflow runs
+        uses: MajorScruffy/delete-old-workflow-runs@v0.3.0
+        with:
+          repository: laoon2022/564334
+          older-than-seconds: 60
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  Sync_Gdrive_000:
+    name: Sync_Gdrive_000
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+          
+      - name: Download Gclone
+        run: |
+          wget https://api.github.com/repos/dogbutcat/gclone/releases/latest -O - | awk -F \" -v RS="," '/browser_download_url/ {print $(NF-1)}' | grep 'linux-amd64.zip' | xargs wget
+          unzip ./gclone-*-linux-amd64.zip
+          cd ./gclone-*-linux-amd64
+          chmod +x ./gclone
+          sudo cp ./gclone /bin
+      - name: Sync Gdrive
+        run: |
+          mkdir -p ~/.config/rclone/
+          touch ~/.config/rclone/rclone.conf
+          cat rclone.conf | sed "s@ACCESS_TOKEN@${ACCESS_TOKEN}@g" | sed "s@REFRESH_TOKEN@${REFRESH_TOKEN}@g" > ~/.config/rclone/rclone.conf
+          ARRAY_SAVE_FIELD_ID=($(echo ${SAVE_FIELD_ID}))
+          gclone -vv sync drive:{$SHARE_FIELD_ID} drive:{${ARRAY_SAVE_FIELD_ID[0]}} --drive-server-side-across-configs
+
+##############################################################################################################################################
+  Sync_Gdrive_001:
+    name: Sync_Gdrive_001
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+          
+      - name: Download Gclone
+        run: |
+          wget https://api.github.com/repos/dogbutcat/gclone/releases/latest -O - | awk -F \" -v RS="," '/browser_download_url/ {print $(NF-1)}' | grep 'linux-amd64.zip' | xargs wget
+          unzip ./gclone-*-linux-amd64.zip
+          cd ./gclone-*-linux-amd64
+          chmod +x ./gclone
+          sudo cp ./gclone /bin
+      - name: Sync Gdrive
+        run: |
+          mkdir -p ~/.config/rclone/
+          touch ~/.config/rclone/rclone.conf
+          cat rclone.conf | sed "s@ACCESS_TOKEN@${ACCESS_TOKEN}@g" | sed "s@REFRESH_TOKEN@${REFRESH_TOKEN}@g" > ~/.config/rclone/rclone.conf
+          ARRAY_SAVE_FIELD_ID=($(echo ${SAVE_FIELD_ID}))
+          gclone -vv sync drive:{$SHARE_FIELD_ID} drive:{${ARRAY_SAVE_FIELD_ID[1]}} --drive-server-side-across-configs
+
+##############################################################################################################################################
+  Sync_Gdrive_002:
+    name: Sync_Gdrive_002
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+          
+      - name: Download Gclone
+        run: |
+          wget https://api.github.com/repos/dogbutcat/gclone/releases/latest -O - | awk -F \" -v RS="," '/browser_download_url/ {print $(NF-1)}' | grep 'linux-amd64.zip' | xargs wget
+          unzip ./gclone-*-linux-amd64.zip
+          cd ./gclone-*-linux-amd64
+          chmod +x ./gclone
+          sudo cp ./gclone /bin
+      - name: Sync Gdrive
+        run: |
+          mkdir -p ~/.config/rclone/
+          touch ~/.config/rclone/rclone.conf
+          cat rclone.conf | sed "s@ACCESS_TOKEN@${ACCESS_TOKEN}@g" | sed "s@REFRESH_TOKEN@${REFRESH_TOKEN}@g" > ~/.config/rclone/rclone.conf
+          ARRAY_SAVE_FIELD_ID=($(echo ${SAVE_FIELD_ID}))
+          gclone -vv sync drive:{$SHARE_FIELD_ID} drive:{${ARRAY_SAVE_FIELD_ID[2]}} --drive-server-side-across-configs
+
+##############################################################################################################################################
+  Sync_Gdrive_003:
+    name: Sync_Gdrive_003
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+          
+      - name: Download Gclone
+        run: |
+          wget https://api.github.com/repos/dogbutcat/gclone/releases/latest -O - | awk -F \" -v RS="," '/browser_download_url/ {print $(NF-1)}' | grep 'linux-amd64.zip' | xargs wget
+          unzip ./gclone-*-linux-amd64.zip
+          cd ./gclone-*-linux-amd64
+          chmod +x ./gclone
+          sudo cp ./gclone /bin
+      - name: Sync Gdrive
+        run: |
+          mkdir -p ~/.config/rclone/
+          touch ~/.config/rclone/rclone.conf
+          cat rclone.conf | sed "s@ACCESS_TOKEN@${ACCESS_TOKEN}@g" | sed "s@REFRESH_TOKEN@${REFRESH_TOKEN}@g" > ~/.config/rclone/rclone.conf
+          ARRAY_SAVE_FIELD_ID=($(echo ${SAVE_FIELD_ID}))
+          gclone -vv sync drive:{$SHARE_FIELD_ID} drive:{${ARRAY_SAVE_FIELD_ID[3]}} --drive-server-side-across-configs
+
+##############################################################################################################################################
+  Sync_Gdrive_004:
+    name: Sync_Gdrive_004
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+          
+      - name: Download Gclone
+        run: |
+          wget https://api.github.com/repos/dogbutcat/gclone/releases/latest -O - | awk -F \" -v RS="," '/browser_download_url/ {print $(NF-1)}' | grep 'linux-amd64.zip' | xargs wget
+          unzip ./gclone-*-linux-amd64.zip
+          cd ./gclone-*-linux-amd64
+          chmod +x ./gclone
+          sudo cp ./gclone /bin
+      - name: Sync Gdrive
+        run: |
+          mkdir -p ~/.config/rclone/
+          touch ~/.config/rclone/rclone.conf
+          cat rclone.conf | sed "s@ACCESS_TOKEN@${ACCESS_TOKEN}@g" | sed "s@REFRESH_TOKEN@${REFRESH_TOKEN}@g" > ~/.config/rclone/rclone.conf
+          ARRAY_SAVE_FIELD_ID=($(echo ${SAVE_FIELD_ID}))
+          gclone -vv sync drive:{$SHARE_FIELD_ID} drive:{${ARRAY_SAVE_FIELD_ID[4]}} --drive-server-side-across-configs
+
+##############################################################################################################################################
+  Sync_Gdrive_005:
+    name: Sync_Gdrive_005
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+          
+      - name: Download Gclone
+        run: |
+          wget https://api.github.com/repos/dogbutcat/gclone/releases/latest -O - | awk -F \" -v RS="," '/browser_download_url/ {print $(NF-1)}' | grep 'linux-amd64.zip' | xargs wget
+          unzip ./gclone-*-linux-amd64.zip
+          cd ./gclone-*-linux-amd64
+          chmod +x ./gclone
+          sudo cp ./gclone /bin
+      - name: Sync Gdrive
+        run: |
+          mkdir -p ~/.config/rclone/
+          touch ~/.config/rclone/rclone.conf
+          cat rclone.conf | sed "s@ACCESS_TOKEN@${ACCESS_TOKEN}@g" | sed "s@REFRESH_TOKEN@${REFRESH_TOKEN}@g" > ~/.config/rclone/rclone.conf
+          ARRAY_SAVE_FIELD_ID=($(echo ${SAVE_FIELD_ID}))
+          gclone -vv sync drive:{$SHARE_FIELD_ID} drive:{${ARRAY_SAVE_FIELD_ID[5]}} --drive-server-side-across-configs
+##############################################################################################################################################
