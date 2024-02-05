@@ -27,7 +27,7 @@ jobs:
       - name: Delete workflow runs
         uses: MajorScruffy/delete-old-workflow-runs@v0.3.0
         with:
-          repository: laoon2022/564334
+          repository: laoon2022/drive
           older-than-seconds: 60
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
