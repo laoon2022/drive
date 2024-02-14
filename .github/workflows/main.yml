@@ -1,6 +1,7 @@
 name: Sync Gdrive
 on:
   schedule:
+    - cron: "0 13 * * *"
     - cron: "0 2 * * *"
     - cron: "0 4 * * *"
   workflow_dispatch:
