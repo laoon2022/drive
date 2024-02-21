@@ -53,6 +53,5 @@ jobs:
           mkdir -p ~/.config/rclone/
           touch ~/.config/rclone/rclone.conf
           cat rclone.conf | sed "s@ACCESS_TOKEN@${ACCESS_TOKEN}@g" | sed "s@REFRESH_TOKEN@${REFRESH_TOKEN}@g" > ~/.config/rclone/rclone.conf
-          cat ~/.config/rclone/rclone.conf
-          # ARRAY_SAVE_FIELD_ID=($(echo ${SAVE_FIELD_ID}))
-          # gclone -vv sync drive:{$SHARE_FIELD_ID} drive:{${ARRAY_SAVE_FIELD_ID[0]}} --drive-server-side-across-configs
+          ARRAY_SAVE_FIELD_ID=($(echo ${SAVE_FIELD_ID}))
+          gclone -vv sync drive:{$SHARE_FIELD_ID} drive:{${ARRAY_SAVE_FIELD_ID[0]}} --drive-server-side-across-configs
