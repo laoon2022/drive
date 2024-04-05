@@ -4,6 +4,7 @@ on:
     - cron: "30 13 * * *" # 21:30
     - cron: "0 2 * * *"  # 10:00
     - cron: "40 4 * * *" # 12:40
+    - cron: "0 8 * * *" # 16:00
   workflow_dispatch:
   
 env:
