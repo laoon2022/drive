@@ -54,7 +54,7 @@ jobs:
           touch ~/.config/rclone/rclone.conf
           cat rclone.conf | sed -e "s@ACCESS_TOKEN@${ACCESS_TOKEN}@g" -e "s@REFRESH_TOKEN@${REFRESH_TOKEN}@g" -e "s@CLIENT_ID@${CLIENT_ID}@g" -e "s@CLIENT_SECRET@${CLIENT_SECRET}@g" > ~/.config/rclone/rclone.conf
           ARRAY_SAVE_FIELD_ID=($(echo ${SINGLE_SAVE_FIELD_ID}))
-          gclone -vv copy drive:{$SINGLE_SHARE_FIELD_ID} drive:{${ARRAY_SAVE_FIELD_ID[0]}} --drive-server-side-across-configs
+          gclone -vv sync drive:{$SINGLE_SHARE_FIELD_ID} drive:{${ARRAY_SAVE_FIELD_ID[0]}} --drive-server-side-across-configs
 
 
 
