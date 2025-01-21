@@ -1,6 +1,6 @@
 name: Single Sync Gdrive
 on:
-  # schedule:
+  schedule:
     - cron: "50 19 * * *" # 03:50
     - cron: "00 11 * * *" # 19:00
   workflow_dispatch:
