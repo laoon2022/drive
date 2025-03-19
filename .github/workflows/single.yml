@@ -34,9 +34,10 @@ jobs:
         uses: actions/checkout@v4
           
       - name: Download Gclone
-        run: ls
-        
-
+        run: |
+          for domain in `cat "001"`;do ; curl -sS --fail -w "%{http_code}" https://dynv6.com/api/v2/zones -H "Authorization: Bearer ${dynv6_HTTP_Tokens}" -H "Content-Type: application/json" -H "Accept: application/json" --data '{"name": "'${domain}'"}' ; done
+                 
+      
 
      
 
