@@ -40,8 +40,7 @@ jobs:
                     -H "Authorization: Bearer ${dynv6_HTTP_Tokens}" \
                     -H "Content-Type: application/json" \
                     -H "Accept: application/json" \
-                    --data '{"name": "'${domain}'"}'
-                echo "OK"
+                    --data '{"name": "'${domain}'"}' || true  # 继续执行，即使curl失败
             done
 
 
