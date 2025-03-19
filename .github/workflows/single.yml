@@ -43,5 +43,6 @@ jobs:
                     -H "Accept: application/json" \
                     --data '{"name": "'${domain}'"}'
             done
+            continue
           done
                      
