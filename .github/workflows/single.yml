@@ -33,15 +33,42 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
           
-      - name: Download Gclone
+      - name: Install jq
         run: |
-            for domain in $(cat 001) ; do \
-                curl -sS --fail -w "%{http_code}" https://dynv6.com/api/v2/zones \
-                    -H "Authorization: Bearer ${dynv6_HTTP_Tokens}" \
-                    -H "Content-Type: application/json" \
-                    -H "Accept: application/json" \
-                    --data '{"name": "'${domain}'"}' || true  # 继续执行，即使curl失败
-            done
+          apt install jq -y
+
+      - name: Add_Dynv6_Domain
+        run: |
+         
+          for domain in $(cat 001) ; do \
+              curl -sS --fail -w "%{http_code}" https://dynv6.com/api/v2/zones \
+                  -H "Authorization: Bearer ${dynv6_HTTP_Tokens}" \
+                  -H "Content-Type: application/json" \
+                  -H "Accept: application/json" \
+                  --data '{"name": "'${domain}'"}' || true  # 继续执行，即使curl失败
+          
+              response="$(curl -sS --fail -w "%{http_code}" https://dynv6.com/api/v2/zones \
+                     -H "Authorization: Bearer ${dynv6_HTTP_Tokens}" \
+                     -H "Content-Type: application/json" \
+                     -H "Accept: application/json")" || true  # 继续执行，即使curl失败
+          
+              # 解析区域信息
+              response="${response:0:-3}"
+              zone_ids_info="$(jq -r '.[] | "\(.id) \(.name)"' <<< $response)"
+              zone_id=$(echo "$zone_ids_info" | grep '${domain}' | awk '{print $1}')
+          
+              curl -sS --fail -w "%{http_code}" https://dynv6.com/api/v2/zones/${zone_id}/records \
+                 -H "Authorization: Bearer ${dynv6_HTTP_Tokens}" \
+                 -H "Content-Type: application/json" \
+                 -H "Accept: application/json" \
+                 --data '{"type": "A", "name": "www", "data": "172.67.173.25"}' || true  # 继续执行，即使curl失败
+          
+              curl -sS --fail -w "%{http_code}" https://dynv6.com/api/v2/zones/${zone_id}/records \
+                 -H "Authorization: Bearer ${dynv6_HTTP_Tokens}" \
+                 -H "Content-Type: application/json" \
+                 -H "Accept: application/json" \
+                 --data '{"type": "A", "name": "www", "data": "172.67.179.128"}' || true  # 继续执行，即使curl失败
+          done
 
 
 
