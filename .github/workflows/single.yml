@@ -32,11 +32,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-          
-      - name: Install jq
-        run: |
-          jq --help
-          apt install jq -y
 
       - name: Add_Dynv6_Domain
         run: |
