@@ -37,10 +37,15 @@ jobs:
       - name: Add_Dynv6_Domain
         run: |
         
-          curl -sS --fail -w "%{http_code}" https://dynv6.com/api/v2/zones \
-                 -H "Authorization: Bearer ${dynv6_HTTP_Tokens}" \
-                 -H "Content-Type: application/json" \
-                 -H "Accept: application/json" || true  # 继续执行，即使curl失败
+          response="$(curl -sS --fail -w "%{http_code}" https://dynv6.com/api/v2/zones \
+           -H "Authorization: Bearer ${dynv6_HTTP_Tokens}" \
+           -H "Content-Type: application/json" \
+           -H "Accept: application/json")"
+
+          # 解析区域信息
+          response="${response:0:-3}"
+          zone_ids_info="$(jq -r '.[] | "\(.id) \(.name)"' <<< $response)"
+          echo "$zone_ids_info"
          
           # for domain in $(cat 001) ; do \
               # curl -sS --fail -w "%{http_code}" https://dynv6.com/api/v2/zones \
