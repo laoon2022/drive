@@ -1,7 +1,6 @@
 name: Single Sync Gdrive
 on:
   workflow_dispatch:
-  push:
   
 env:
   dynv6_HTTP_Tokens: ${{ secrets.dynv6_HTTP_Tokens }}
