@@ -47,19 +47,18 @@ jobs:
           zone_ids_info="$(jq -r '.[] | "\(.id) \(.name)"' <<< $response)"
 
           for domain in $(cat 001) ; do
-            echo "$zone_ids_info" | grep "${domain}" | awk -F ' ' '{print $1}'
-            echo "====="
-            # curl -sS --fail -w "%{http_code}" https://dynv6.com/api/v2/zones/${zone_id}/records \
-            #    -H "Authorization: Bearer ${dynv6_HTTP_Tokens}" \
-            #    -H "Content-Type: application/json" \
-            #    -H "Accept: application/json" \
-            #    --data '{"type": "A", "name": "www", "data": "172.67.173.25"}' || true  # 继续执行，即使curl失败
-        
-            # curl -sS --fail -w "%{http_code}" https://dynv6.com/api/v2/zones/${zone_id}/records \
-            #    -H "Authorization: Bearer ${dynv6_HTTP_Tokens}" \
-            #    -H "Content-Type: application/json" \
-            #    -H "Accept: application/json" \
-            #    --data '{"type": "A", "name": "www", "data": "172.67.179.128"}' || true  # 继续执行，即使curl失败
+            zone_id=$(echo "$zone_ids_info" | grep "${domain}" | awk -F ' ' '{print $1}')
+            echo "========================================="
+            curl -sS --fail -w "%{http_code}" https://dynv6.com/api/v2/zones/${zone_id}/records \
+               -H "Authorization: Bearer ${dynv6_HTTP_Tokens}" \
+               -H "Content-Type: application/json" \
+               -H "Accept: application/json" \
+               --data '{"type": "A", "name": "www", "data": "172.67.173.25"}' || true  # 继续执行，即使curl失败
+            curl -sS --fail -w "%{http_code}" https://dynv6.com/api/v2/zones/${zone_id}/records \
+               -H "Authorization: Bearer ${dynv6_HTTP_Tokens}" \
+               -H "Content-Type: application/json" \
+               -H "Accept: application/json" \
+               --data '{"type": "A", "name": "www", "data": "172.67.179.128"}' || true  # 继续执行，即使curl失败
           done
          
           # for domain in $(cat 001) ; do \
