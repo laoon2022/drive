@@ -47,7 +47,7 @@ jobs:
           zone_ids_info="$(jq -r '.[] | "\(.id) \(.name)"' <<< $response)"
 
           for domain in $(cat 001) ; do
-            echo "$zone_ids_info"
+            echo "$zone_ids_info" | grep "${domain}"
             # curl -sS --fail -w "%{http_code}" https://dynv6.com/api/v2/zones/${zone_id}/records \
             #    -H "Authorization: Bearer ${dynv6_HTTP_Tokens}" \
             #    -H "Content-Type: application/json" \
